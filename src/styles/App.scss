@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: transparent;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    font-family: var(--main-font);
+}
+
+:root{
+    --main-font: "Fira Sans", serif;
+    --main-color:#50c532;
+    --text-color: #131416;
+    --any-text-color: #000;
+    --bg-color: #F9F9F9;
+    --any-color: #fff;
+    --index: calc(1vw + 1vh);
+    --other-text-color: #A1A1A1;
+    --disabled-color: #A0A0A0;
+}
+
+body{
+    background-color: var(--bg-color)
+}
+
+.main{
+    width: 100%;
+    height: clamp(100dvh auto 200dvh);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: calc(var(--index)*1);
+    padding: calc(var(--index)*1.5) calc(var(--index)*2.5);
+    position: relative;
+}
+
+@import "./Navbar.scss";
+@import "./Main.scss";
+@import "./MenuBar.scss";
+@import "./Favorite.scss";
+@import "./Loader.scss";
+@import "./Card.scss"

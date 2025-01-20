@@ -1,0 +1,204 @@
+.menu-bar1{
+    user-select: none;
+    position: sticky;
+    top: 6%;
+}
+
+.menu-bar{
+    width: calc(var(--index)*11.5);
+    background-color: var(--any-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--index)*1.5);
+    padding: calc(var(--index)*0.8) calc(var(--index)*0.7);
+    border-radius: calc(var(--index)*0.5);
+    box-shadow: 0 calc(var(--index)*0.5) calc(var(--index)*0.5) rgba(0, 0, 0, 0.137);
+}
+
+.open-bar{
+    width: calc(var(--index)*2.8);
+    height: calc(var(--index)*3.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--any-color);
+    border-radius: 0 calc(var(--index)*0.25) calc(var(--index)*0.25) 0;
+    position: absolute;
+    right: calc(var(--index)* -2.6);
+    top: 15%;
+    box-shadow: calc(var(--index)*0.4) calc(var(--index)*0.3) calc(var(--index)*0.5) rgba(0, 0, 0, 0.137);
+    cursor: pointer;
+    transition: 0.25s ease;
+
+    svg{
+        font-size: calc(var(--index)*1.3);
+        color: var(--main-color);
+    }
+
+    .active-openIcon{
+        transform: scale(-1);
+    }
+}
+
+.open-activeBar{
+    right: 0;
+}
+
+.radio-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--index)*0.8);
+}
+
+.name-svg{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // gap: calc(var(--index)*1);
+    h3{
+        width: 100%;
+        font-size: calc(var(--index)*1.2);
+        color: var(--any-text-color);
+        font-weight: 600;
+        word-spacing: calc(var(--index)*0.15);
+    }
+    svg{
+        font-size: calc(var(--index)*1.2);
+        color: var(--any-text-color);
+        cursor: pointer;
+    }
+}
+
+.radios{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--index)*0.7);
+    padding-left: calc(var(--index)*0.5);
+}
+
+.div-radio{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: calc(var(--index)*0.4);
+
+    p{
+        font-size: calc(var(--index)*0.8);
+        font-weight: 400;
+        color: var(--any-text-color);
+        word-spacing: calc(var(--index)*0.1);
+        cursor: pointer;
+        // letter-spacing: calc(var(--index)*0.0001);
+    }
+}
+
+.radio{
+    width: calc(var(--index)*0.9);
+    height: calc(var(--index)*0.9);
+    cursor: pointer;
+    border-radius: calc(var(--index)*0.15);
+    border: calc(var(--index)*0.05) solid var(--any-text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg{
+        font-size: calc(var(--index)*0.6);
+        color: var(--any-color);
+    }
+}
+
+.active-radio{
+    background-color: var(--main-color);
+}
+
+@media (max-width: 700px) {
+    .menu-bar1{
+        position: absolute;
+        z-index: 200;
+        top: 1.3%;
+        left: calc(var(--index)* -20);
+        transition: 0.25s ease;
+    }
+
+    .active-menu1{
+        left: calc(var(--index)* 1.4);
+    }
+
+    .menu-bar{
+        width: calc(var(--index)*20.5);
+        padding: calc(var(--index)*1.2) calc(var(--index)*1);
+        position: relative;
+    }
+
+    .open-bar{
+        display: flex;
+    }
+
+    .name-svg{
+        h3{
+            font-size: calc(var(--index)*1.5);
+        }
+        svg{
+            font-size: calc(var(--index)*1.5);
+        }
+    }
+
+    .radios{
+        padding-left: calc(var(--index)*1);
+        gap: calc(var(--index)*1);
+    }
+
+    .div-radio{
+        gap: calc(var(--index)*0.7);
+        align-items: center;
+        p{
+            font-size: calc(var(--index)*1.1);
+        }
+    }
+
+    .radio{
+        width: calc(var(--index)*1.3);
+        height: calc(var(--index)*1.3);
+    }
+}
+
+@media (max-width: 500px) {
+    .menu-bar{
+        width: calc(var(--index)*20.5);
+        padding: calc(var(--index)*1.5) calc(var(--index)*1.3);
+        position: relative;
+    }
+
+    .name-svg{
+        h3{
+            font-size: calc(var(--index)*1.8);
+        }
+        svg{
+            font-size: calc(var(--index)*1.8);
+        }
+    }
+
+    .radios{
+        padding-left: calc(var(--index)*1);
+        gap: calc(var(--index)*1);
+    }
+
+    .div-radio{
+        gap: calc(var(--index)*0.7);
+        align-items: center;
+        p{
+            font-size: calc(var(--index)*1.3);
+        }
+    }
+
+    .radio{
+        width: calc(var(--index)*1.5);
+        height: calc(var(--index)*1.5);
+    }
+}
