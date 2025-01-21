@@ -247,10 +247,12 @@
 
     .information{
         button{
-            width: calc(var(--index)*2.5);
-            height: calc(var(--index)*2.5);
-            font-size: calc(var(--index)*1.3);
+            width: calc(var(--index)*2.8);
+            height: calc(var(--index)*2.8);
+            font-size: calc(var(--index)*1.5);
         }
+        justify-content: center;
+        top: calc(var(--index)*2);
     }
 
     .pages{

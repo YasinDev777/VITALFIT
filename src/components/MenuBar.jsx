@@ -127,7 +127,7 @@ const MenuBar = ({
                 >
                   {activeStates1[index] ? <FaCheck /> : null}
                 </div>
-                <p onClick={() => toggleRadio(index)}>{item}</p>
+                <p onClick={() => toggleRadio1(index)}>{item}</p>
               </div>
             ))}
           </div>
