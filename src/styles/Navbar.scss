@@ -67,7 +67,7 @@
     p{
         font-size: calc(var(--index)*1.2);
         font-weight: 600;
-        color: var(--text-colot);
+        color: var(--text-color);
     
         span{
             color: var(--main-color);
@@ -216,6 +216,22 @@
         .active-svg{
             color: var(--main-color);
         }
+
+        button{
+            font-size: calc(var(--index)*1);
+            padding: calc(var(--index)*0.4) calc(var(--index)*1.45);
+            background-color: var(--main-color);
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: calc(var(--index)*0.8) 0 calc(var(--index)*0.8) 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: calc(var(--index)*0.5);
+            svg{
+                font-size: calc(var(--index)*1.15);
+            }
+        }
     }
 }
 
@@ -238,6 +254,7 @@
     }
 }
 
+
 @media (max-width: 700px) {
     .contact-tex{
         display: none;
@@ -250,9 +267,14 @@
         width: 100%;
         height: 100dvh;
         flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.63);
+        background-color: rgba(0, 0, 0, 0.781);
+        -webkit-backdrop-filter: blur(calc(var(--index)*0.4));
+        -moz-backdrop-filter: blur(calc(var(--index)*0.4));
+        -ms-backdrop-filter: blur(calc(var(--index)*0.4));
+        -o-backdrop-filter: blur(calc(var(--index)*0.4));
+        backdrop-filter: blur(calc(var(--index)*0.4));
         z-index: 500;
-        padding-top: calc(var(--index)*5);
+        padding-top: calc(var(--index)*9);
         align-items: center;
         gap: calc(var(--index)*4);
         a{
@@ -309,6 +331,9 @@
             font-size: calc(var(--index)*1.55);
         }
     }
+    .back{
+        font-size: calc(var(--index)*2.5);
+    }
 }
 
 @media (max-width: 340px) {
@@ -322,5 +347,14 @@
 
     .logo{
         align-items: center;
+    }
+
+    .related-filter{
+        gap: calc(var(--index)*1.2);
+        width: calc(var(--index)*20);
+    }
+
+    .burger-div{
+        gap: calc(var(--index)*1);
     }
 }

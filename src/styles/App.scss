@@ -19,6 +19,7 @@
     --any-color: #fff;
     --index: calc(1vw + 1vh);
     --other-text-color: #A1A1A1;
+    --gray-text: #A6A6A6;
     --disabled-color: #A0A0A0;
 }
 
@@ -42,4 +43,5 @@ body{
 @import "./MenuBar.scss";
 @import "./Favorite.scss";
 @import "./Loader.scss";
-@import "./Card.scss"
+@import "./Card.scss";
+@import "./Login.scss";

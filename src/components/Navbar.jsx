@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaPhoneAlt, FaSearch, FaRegHeart } from "react-icons/fa";
 import { HiMenuAlt2 } from "react-icons/hi";
-import { IoCloseSharp, IoArrowBackCircleSharp } from "react-icons/io5";
+import { IoCloseSharp, IoArrowBackCircleSharp, IoArrowForwardCircle } from "react-icons/io5";
 
 const Navbar = ({
     setSearchText,
@@ -12,6 +12,12 @@ const Navbar = ({
     const location = useLocation()    
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
+
+    useEffect(() =>{
+        let body = document.querySelector('body')
+        if(open === true) body.style.overflow = 'hidden'
+        else body.style.overflow = 'auto'
+    }, [open])
 
   return (
     <div className='navbar'>
@@ -46,7 +52,7 @@ const Navbar = ({
         </div>
         <div className="nav-bottom">
             <div className="burger-div">
-                <IoArrowBackCircleSharp className='back' style={window.innerWidth < 700 && location.pathname !== '/' ? {display: 'block'} : {display: 'none'}} onClick={() => navigate('/')} />
+                <IoArrowBackCircleSharp className='back' style={window.innerWidth < 700 && open === false && location.pathname !== '/' ? {display: 'block'} : {display: 'none'}} onClick={() => navigate('/')} />
                 <div className="burger" onClick={() => setOpen(!open)}>
                     {
                         open === false ? <HiMenuAlt2 /> : <IoCloseSharp />
@@ -73,6 +79,9 @@ const Navbar = ({
                 </div>
                 <Link to="bookmarks">
                     <FaRegHeart className={location.pathname === "/bookmarks" ? "active-svg" : ""} />
+                </Link>
+                <Link to="login">
+                    <button><p>Kirish</p> <IoArrowForwardCircle /></button>
                 </Link>
             </div>
         </div>
