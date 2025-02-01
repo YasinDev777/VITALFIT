@@ -89,7 +89,7 @@ const Favorite = ({ searchID, setSearchID, cardArray }) => {
 
   const toggleLike = async (searchId, productData) => {
     if (!userID) {
-      alert("Вы должны быть авторизованы для того, чтобы ставить лайки.");
+      alert("Maxsulotni saqlash uchun tizimga kirishingizni so'raymiz!");
       return;
     }
 

@@ -30,33 +30,37 @@ const Login = ({ nickname, setNickname }) => {
       setError("Имя не может быть длиннее 17 символов");
       return;
     }
-
+  
     try {
       const q = query(collection(db, "users"), where("nickname", "==", nickname));
       const existingUser = await getDocs(q);
-
+  
       if (!existingUser.empty) {
         setError("Пользователь с таким именем уже существует");
         return;
       }
-
+  
       await addDoc(collection(db, "users"), {
         nickname,
         password,
         createdAt: new Date().toISOString(),
       });
-
-      // Шифруем nickname перед сохранением
+  
       const encryptedNickname = encryptData(nickname);
       localStorage.setItem("nickname", encryptedNickname);
-      
-      setNickname(decryptData(nickname));
+      setNickname(decryptData(encryptedNickname)); // Устанавливаем в состояние расшифрованный ник
+  
+      // Очищаем поля инпутов после успешной регистрации
+      setNickname("");
+      setPassword("");
+  
       navigate("/");
     } catch (err) {
       setError("Ошибка регистрации, попробуйте снова");
       console.error(err);
     }
   };
+  
 
   return (
     <div className="login">

@@ -1,0 +1,94 @@
+.popup{
+    width: 100%;
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-popup{
+    width: auto;
+    height: auto;
+    background-color: var(--bg-color);
+    border-radius: calc(var(--index)*0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: calc(var(--index)*0.7) calc(var(--index)*1.3);
+    gap: calc(var(--index)*1);
+    h1{
+        font-size: calc(var(--index)*1.4);
+        font-weight: 500;
+        color: var(--text-color);
+        line-height: calc(v(--index)*1.7);
+    }
+    p{
+        color: #b6b6b6;
+        font-size: calc(var(--index)*0.9);
+    }
+
+    .btns{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: calc(var(--index)*1);
+
+        button{
+            font-size: calc(var(--index)*0.9);
+            border-radius: calc(var(--index)*0.3);
+            padding: calc(var(--index)*0) calc(var(--index)*1.2);
+            height: calc(var(--index)*1.8);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            line-height: 0;
+            background-color: var(--button-color);
+            color: var(--new-text-color);
+            &:nth-child(2){
+                background-color: var(--text-color);
+                color: var(--any-color);
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .popup{
+        padding-top: calc(var(--index)*10);
+        align-items: flex-start;
+    }
+
+    .login-popup{
+        h1{
+            font-size: calc(var(--index)*1.5);
+        }
+        p{
+            font-size: calc(var(--index)*1.1);
+        }
+
+        .btns{
+            gap: calc(var(--index)*1.3);
+            button{
+                font-size: calc(var(--index)*1.2);
+                height: calc(var(--index)*2.3);
+            }
+        }
+    }
+}
+
+@media (max-width: 370px) {
+    .login-popup{
+        width: 90%;
+        gap: calc(var(--index)*1.5);
+        .btns{
+            button{
+                padding: 0 calc(var(--index)*1.8);
+            }
+        }
+    }
+}

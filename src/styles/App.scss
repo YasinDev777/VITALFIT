@@ -21,6 +21,8 @@
     --other-text-color: #A1A1A1;
     --gray-text: #A6A6A6;
     --disabled-color: #A0A0A0;
+    --button-color: #ffdbd6;
+    --new-text-color: #a31400;
 }
 
 body{
@@ -45,3 +47,4 @@ body{
 @import "./Loader.scss";
 @import "./Card.scss";
 @import "./Login.scss";
+@import "./Popup.scss";

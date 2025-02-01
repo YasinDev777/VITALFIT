@@ -6,6 +6,7 @@ import About from './Pages/About'
 import Contact from './Pages/Contact'
 import Favorite from './Pages/Favorite'
 import Card from './Pages/Card'
+import Popup from './components/Popup'
 import "./styles/App.scss"
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Login from './Pages/Login'
@@ -17,12 +18,10 @@ const App = () => {
     const [likeSearch, setLikeSearch] = useState("")
     const [searchID, setSearchID] = useState("")
     const [currentPage, setCurrentPage] = useState(1)
-    const [isLogedIn, setIsLogedIn] = useState(false)
     const [cardArray] = useState([])
     const location = useLocation()
     const [nickname, setNickname] = useState('');
-    console.log(nickname);
-    
+    const [active_popup, setActive_popup] = useState(false)
   return (
     <div className='app'>
             {location.pathname.includes('/product/') 
@@ -57,6 +56,8 @@ const App = () => {
                             cardArray={cardArray}
                             nickname={nickname} 
                             setNickname={setNickname}
+                            setActive_popup={setActive_popup} 
+                            active_popup={active_popup}
                             />
                         </>
                     } />
@@ -69,6 +70,7 @@ const App = () => {
                 <Route path="/product/:id" element={<Card cardArray={cardArray} />} />
                 <Route path="/login" element={<Login nickname={nickname} setNickname={setNickname} />} />
             </Routes>
+            <Popup setActive_popup={setActive_popup} active_popup={active_popup} />
     </div>
   )
 }

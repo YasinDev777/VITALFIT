@@ -8,7 +8,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
 
-const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage, setCurrentPage, cardArray, nickname }) => {
+const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage, setCurrentPage, setActive_popup, active_popup, nickname }) => {
   const [likedProducts, setLikedProducts] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentPerPage] = useState(9);
@@ -118,11 +118,11 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
     };
   
     fetchBookmarks();
-  }, [nickname]); // Загружаем лайки при изменении пользователя
+  }, [nickname]);
   
   const toggleLike = async (searchId) => {
     if (!userId) {
-      alert("Вы должны быть авторизованы для того, чтобы ставить лайки.");
+      setActive_popup(!active_popup)
       return;
     }
   
