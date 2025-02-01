@@ -195,6 +195,7 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
   const Test = (id) => {
     setSearchID(id);
   };
+  console.log(userId);
 
   return loading ? (
     <Loader />
