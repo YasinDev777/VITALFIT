@@ -6,6 +6,7 @@ import { FaRegHeart, FaHeart, FaCartArrowDown } from "react-icons/fa";
 import { MdImageSearch } from "react-icons/md";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
+import CryptoJS from 'crypto-js';
 
 const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage, setCurrentPage, cardArray, nickname }) => {
   const [likedProducts, setLikedProducts] = useState({});
@@ -17,6 +18,16 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
   const totalPages = filterData.length;
   const numbers = [];
   const navigate = useNavigate();
+  const SECRET_KEY = "your-secret-key";
+  const decryptData = (ciphertext) => {
+    try {
+      const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET_KEY);
+      return bytes.toString(CryptoJS.enc.Utf8);
+    } catch (err) {
+      return null; // В случае ошибки возвращаем null
+    }
+  };
+  const userId = decryptData(localStorage.getItem('nickname'));
 
   // Заполняем страницы
   for (let i = 1; i <= Math.ceil(totalPages / currentPerPage); i++) {
@@ -82,7 +93,6 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
 
   useEffect(() => {
     const fetchBookmarks = async () => {
-      const userId = localStorage.getItem('nickname');
       if (!userId) return;
   
       try {
@@ -110,22 +120,16 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
     fetchBookmarks();
   }, [nickname]); // Загружаем лайки при изменении пользователя
   
-  
-
   const toggleLike = async (searchId, productData) => {
-    const userId = localStorage.getItem('nickname');
     if (!userId) {
       alert("Вы должны быть авторизованы для того, чтобы ставить лайки.");
       return;
-    }
-  
-    // Проверяем, не идёт ли уже запрос, чтобы избежать спама
+    }  
     if (likedProducts[searchId] === "loading") return;
-  
-    // Предварительное обновление UI (оптимистичное обновление)
+
     setLikedProducts((prevState) => ({
       ...prevState,
-      [searchId]: prevState[searchId] === true ? false : true, // Инвертируем лайк
+      [searchId]: prevState[searchId] === true ? false : true,
     }));
   
     try {
@@ -142,9 +146,11 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
       
       const isLiked = productData.liked_by && productData.liked_by[userId] === userId;
       const newLikeState = !isLiked;
+      const current_date = new Date().toISOString();
   
       await updateDoc(productDocRef, {
         [`liked_by.${userId}`]: newLikeState ? userId : deleteField(),
+        [`liked_date.${userId}`]: newLikeState ? current_date : deleteField(),
       });
   
       const bookmarkDocRef = doc(db, "bookmarks", userId);
@@ -166,15 +172,12 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
       }
     } catch (err) {
       console.error("Ошибка при обновлении данных в Firestore: ", err);
-      
-      // Откатываем лайк в случае ошибки
       setLikedProducts((prevState) => ({
         ...prevState,
         [searchId]: !prevState[searchId],
       }));
     }
   };
-  
 
   const Test = (id) => {
     setSearchID(id);

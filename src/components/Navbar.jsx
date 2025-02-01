@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaPhoneAlt, FaSearch, FaRegHeart } from "react-icons/fa";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoCloseSharp, IoArrowBackCircleSharp, IoArrowForwardCircle } from "react-icons/io5";
-
+import CryptoJS from 'crypto-js';
 const Navbar = ({
     setSearchText,
     searchText,
@@ -12,6 +12,18 @@ const Navbar = ({
     const location = useLocation()    
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
+    const userId = localStorage.getItem('nickname')
+    const SECRET_KEY = "your-secret-key";
+    
+    const decryptData = (ciphertext) => {
+      try {
+        const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET_KEY);
+        return bytes.toString(CryptoJS.enc.Utf8);
+      } catch (err) {
+        return null; // В случае ошибки возвращаем null
+      }
+    };
+    const decryUserId = decryptData(userId)
 
     useEffect(() =>{
         let body = document.querySelector('body')
@@ -77,12 +89,16 @@ const Navbar = ({
                     /> 
                     <FaSearch />
                 </div>
-                <Link to="bookmarks">
+                <Link to="bookmarks" style={userId ? {display: 'flex'} : {display: 'none'}}>
                     <FaRegHeart className={location.pathname === "/bookmarks" ? "active-svg" : ""} />
                 </Link>
-                <Link to="login">
-                    <button><p>Kirish</p> <IoArrowForwardCircle /></button>
-                </Link>
+                {
+                userId ?
+                    <h5 className='user-name'>{decryUserId}</h5> :
+                    <Link to="login">
+                        <button><p>Kirish</p> <IoArrowForwardCircle /></button>
+                    </Link>
+                }
             </div>
         </div>
     </div>

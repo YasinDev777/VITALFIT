@@ -1,54 +1,70 @@
-import React, { useState } from 'react';
-import { IoArrowBackCircleSharp } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
+import React, { useState } from "react";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import CryptoJS from "crypto-js"; // Импортируем библиотеку для шифрования
+
+const SECRET_KEY = "your-secret-key"; // Используйте надежный ключ
+
+const encryptData = (data) => {
+  return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
+};
+
+const decryptData = (ciphertext) => {
+  try {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET_KEY);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  } catch (err) {
+    return null; // В случае ошибки возвращаем null
+  }
+};
 
 const Login = ({ nickname, setNickname }) => {
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     if (nickname.length > 17) {
-      setError('Имя не может быть длиннее 17 символов');
+      setError("Имя не может быть длиннее 17 символов");
       return;
     }
-  
+
     try {
-      const q = query(collection(db, 'users'), where('nickname', '==', nickname));
+      const q = query(collection(db, "users"), where("nickname", "==", nickname));
       const existingUser = await getDocs(q);
-  
+
       if (!existingUser.empty) {
-        setError('Пользователь с таким именем уже существует');
+        setError("Пользователь с таким именем уже существует");
         return;
       }
-  
-      await addDoc(collection(db, 'users'), {
+
+      await addDoc(collection(db, "users"), {
         nickname,
         password,
         createdAt: new Date().toISOString(),
       });
-  
-      // Сохраняем nickname в localStorage
-      localStorage.getItem('nickname')
-      localStorage.setItem('nickname', nickname);
-      setNickname(nickname);  // Устанавливаем в состояние
-      navigate('/');
+
+      // Шифруем nickname перед сохранением
+      const encryptedNickname = encryptData(nickname);
+      localStorage.setItem("nickname", encryptedNickname);
+      
+      setNickname(decryptData(nickname));
+      navigate("/");
     } catch (err) {
-      setError('Ошибка регистрации, попробуйте снова');
+      setError("Ошибка регистрации, попробуйте снова");
       console.error(err);
     }
   };
-  
-  
+
   return (
-    <div className='login'>
+    <div className="login">
       <div className="login-wrapper">
         <div className="login-div">
           <div className="diiv">
             <div className="backing">
-              <Link to='/'>
+              <Link to="/">
                 <IoArrowBackCircleSharp />
               </Link>
             </div>
