@@ -30,7 +30,7 @@ const Favorite = ({ searchID, setSearchID, cardArray, nickname }) => {
       setLoading(true);
       try {
         const productRef = collection(db, "product");
-        const q = query(productRef, where(`liked_by.${userId}`, "==", userId), orderBy(`liked_date.${userID}`, 'desc'));
+        const q = query(productRef, where(`liked_by.${userId}`, "==", userId));
         const querySnapshot = await getDocs(q);
 
         const products = [];

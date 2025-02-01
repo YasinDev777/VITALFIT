@@ -120,19 +120,21 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
     fetchBookmarks();
   }, [nickname]); // Загружаем лайки при изменении пользователя
   
-  const toggleLike = async (searchId, productData) => {
+  const toggleLike = async (searchId) => {
     if (!userId) {
       alert("Вы должны быть авторизованы для того, чтобы ставить лайки.");
       return;
-    }  
+    }
+  
     if (likedProducts[searchId] === "loading") return;
-
+  
     setLikedProducts((prevState) => ({
       ...prevState,
       [searchId]: prevState[searchId] === true ? false : true,
     }));
   
     try {
+      // Получаем продукт с нужным search_id
       const productQuery = query(collection(db, "product"), where("search_id", "==", searchId));
       const querySnapshot = await getDocs(productQuery);
   
@@ -143,41 +145,52 @@ const Main = ({ setProductsArray, filterData, searchID, setSearchID, currentPage
   
       const productDoc = querySnapshot.docs[0];
       const productDocRef = doc(db, "product", productDoc.id);
-      
-      const isLiked = productData.liked_by && productData.liked_by[userId] === userId;
+  
+      // Загружаем текущие данные продукта
+      const productSnap = await getDoc(productDocRef);
+      if (!productSnap.exists()) {
+        console.error("Документ продукта не найден");
+        return;
+      }
+      const productData = productSnap.data();
+  
+      const isLiked = productData.liked_by?.[userId] === userId;
       const newLikeState = !isLiked;
       const current_date = new Date().toISOString();
   
+      // Обновляем Firestore
       await updateDoc(productDocRef, {
         [`liked_by.${userId}`]: newLikeState ? userId : deleteField(),
         [`liked_date.${userId}`]: newLikeState ? current_date : deleteField(),
       });
   
+      // Обновляем закладки (bookmarks)
       const bookmarkDocRef = doc(db, "bookmarks", userId);
-  
       if (newLikeState) {
         await setDoc(bookmarkDocRef, {
           liked: {
             [searchId]: {
               search_id: searchId,
               liked_by: userId,
-              liked: true
-            }
-          }
+              liked: true,
+            },
+          },
         }, { merge: true });
       } else {
         await updateDoc(bookmarkDocRef, {
           [`liked.${searchId}`]: deleteField(),
         });
       }
+  
     } catch (err) {
-      console.error("Ошибка при обновлении данных в Firestore: ", err);
+      console.error("Ошибка при обновлении данных в Firestore:", err);
       setLikedProducts((prevState) => ({
         ...prevState,
         [searchId]: !prevState[searchId],
       }));
     }
   };
+  
 
   const Test = (id) => {
     setSearchID(id);
